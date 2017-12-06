@@ -287,8 +287,22 @@ function composeResponse(action, data) {
     return response;
 }
 
+const myMainUrl = "https://api.susi.ai/susi/chat.json?timezoneOffset=-300";
+let queryUrl = "";
+let loggedUser;
+chrome.storage.sync.get("loggedUser",(userDetails) => {
+    loggedUser = userDetails.loggedUser;
+    loggedUser = `${loggedUser.accessToken}`;
+});
+
 function getResponse(query) {
     loading();
+    if(loggedUser){
+        queryUrl = myMainUrl+"&q="+query+"&language=en&access_token="+loggedUser;
+    }
+    else{
+        queryUrl = myMainUrl+"&q="+query+"&language=en";
+    }
     $.ajax({
         dataType: "jsonp",
         type: "GET",

@@ -46,7 +46,9 @@ loginForm.addEventListener("submit", function login(event){
 		crossDomain: true,
 		success: function (response) {
 			if(response.accepted){
-				accessToken = response.accessTken;
+				/* jshint ignore:start */
+				accessToken = response.access_token;
+				/* jshint ignore:end */
 				chrome.storage.sync.set({
 					loggedUser:{
 						email:email,
